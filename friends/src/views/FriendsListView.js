@@ -1,16 +1,18 @@
  import React, { Component, Fragment } from 'react';
  import { connect } from "react-redux"
-
-
+import { getFriends } from "../actions"
+import { FriendsList } from "../components"
  class FriendsListView extends Component {
 // remember to use `this`
    componentDidMount() {
-       
+       this.props.getFriends()
    }
      render() {
          return (
             <Fragment>
-
+                {this.props.fetchingFriends ? <h3>Fetching Friends... </h3> : this.props.friends.map((friend, index) => (
+                    <FriendsList key={index} friends={friend}/>
+                ))}
             </Fragment>
          )
      }
@@ -25,7 +27,7 @@
      }
  }
 
- export default connect(mapStateToProps, {  })(FriendsListView)
+ export default connect(mapStateToProps, { getFriends })(FriendsListView)
 
 //  friends: [],
 //  fetchingFriends: false,
